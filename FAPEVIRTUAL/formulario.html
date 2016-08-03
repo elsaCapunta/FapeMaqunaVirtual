@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<%@ Page Language="C#" %>
+<html dir="ltr" xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+<meta name="WebPartPageExpansion" content="full" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled 1</title>
+
+<link href="../SiteAssets/css/jquery-ui.css" rel="stylesheet" type="text/css" />
+<link href="../SiteAssets/css/estilo.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="../SiteAssets/js/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="../SiteAssets/js/jquery-ui.js"></script>
+<script type="text/javascript" src="../SiteAssets/js/jquery.SPServices-2014.02.js"></script>
+<script type="text/javascript" src="../SiteAssets/js/jquery.SPWidgets.js"></script>
+<script type="text/javascript" src="../SiteAssets/js/valida.js"></script>
+<script type="text/javascript" src="../SiteAssets/js/moment.js"></script>
+ 
+ 
+</head>
+		<body>
+			<table border="1">
+				<tr>
+					<td>
+						<table border="0">
+				     <tr>
+				        <td>
+				            <table border="0">
+				                <tr>
+				                    <td>Departamento originador:</td>
+				                    <td><select id ="nomDepOri" required></select></td>
+				                    <td></td>
+				                    <td>APE N°</td>
+				                    <td id="tdMedidaL"><label id="apeN">2016-000-001</label></td>
+				                </tr>
+				                <tr>
+				                    <td>Centro de beneficio:</td>
+				                    <td><select id ="centBene" class="text" required></select></td>
+				                    <td></td>
+				                    <td>Fecha de emisión</td>
+				                    <td id="tdMedida8"><label id="fchFecha"></label></td>
+				                </tr>
+				            </table>
+				            <hr/>
+				        </td>
+				     </tr>
+				     <tr>
+				         <td>Sírvase coordinar el retiro del siguiente material dado de baja</td>
+				     </tr>
+				     <tr>
+				        <td><button id="btnAdd" type="button" class="button">Agregar</button></td>
+				     </tr>
+				     <tr>
+				         <td>
+				             <table id="tableGrid">
+				             	<tr>
+				             		<th>Item</th>
+				             		<th>Cantidad</th>
+				             		<th>Unidad de Medida</th>
+				             		<th>Descripcion</th>
+				             		<th>Condicion</th>
+				             		<th>Activo Fijo</th>
+				             		<th></th>
+				             		<th></th>
+				             	</tr>
+				             </table>
+				         </td>
+				     </tr>
+				     <tr>
+				         <td>
+				             <table id="buttonEnviar">
+				                 <tr>
+				                     <td><button id="btnGuardar" type="button" class="button" >Enviar</button></td>
+				                 </tr>
+				             </table>
+				         </td>
+				     </tr>
+				     <tr>
+				         <td>
+				              <div id="tableMateriales" title="Agregar Materiales" style="display:none">
+				                    
+				                    <input type="hidden" id="Item" />
+				                    <form name="formApe">
+				
+				                    <table border="0" class="tablePopup">
+				                        <tr>
+				                            <td id="tdMedida8">Cantidad</td>
+				                            <td id="tdMedida160">Unidad de Medida</td>
+				                            <td>Condición</td>
+				                            <td>Activo Fijo</td>
+				                        </tr>
+				                        <tr>
+				                            
+				                            <td><input type="text" id ="Cantidad" name="Cantidad"  class="solo-numero text" maxlength="2" /></td>
+				                            <td><select id ="unidadMedida" ></select></td>
+				                            <td><select id ="condicion" ></select></td>
+				                            <td>
+				                            <input type="radio"  name="activoFijo" value="Si" checked/>Si
+				                            <input type="radio"  name="activoFijo" value="No" />No
+				                            </td>
+				                        </tr>
+				                        <tr>
+				                            <td>Descripción</td>
+				                        </tr>
+				                        <tr>
+				                            <td scope="colgroup" colspan="4"><textarea cols="65" maxlength="1500" id="descripcion"></textarea>
+				                            <div id="charNum">0</div></td>
+				                        </tr>
+				                      </table>
+				                     
+				                      <div id="dialog-confirm" title="Modificación de Participante" style="display:none;">
+			  <p><span class="ui-icon ui-icon-alert" style="margin: 0px 12px 4px 0px; float: left;"></span>Se Eliminara el Registro, ¿Desea Continuar?</p>
+		</div>
+				                    </form>
+				                </div>
+				              
+				         </td>
+				     </tr>
+				 </table>
+					</td>
+				</tr>
+			</table>
+			
+			
+	</body>
+</html>
