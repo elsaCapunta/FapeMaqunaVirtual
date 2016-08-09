@@ -10,6 +10,7 @@ var correlativo = "2016-000";
 var FapeID = 0;
 var FapeAux = 0;
 var contador = 1;
+var IdFape = new Array();
 
 
 $(document).ready(function () {
@@ -56,7 +57,7 @@ function registrarEncabezado(){
   addList(ListFormAPE,[["Title",correlativo],["centroDeBeneficio",sltCentroB],
              ["depOrganizador",sltNomDepOri],["Fecha",ConvertDateToISO(hoy)]]);
   
-  }
+}
   
   
 function registrarMateriales(){
@@ -73,6 +74,20 @@ function registrarMateriales(){
 
 }
 
+function registrarMaterialesTemporal(){
+alert("temporal");
+  var txtCnatidad   = $.trim($("#Cantidad").val());
+  var sltUniMedida  = $('#unidadMedida').val();
+  var txtDescrip    = $.trim($('#descripcion').val());
+  var sltCondicion  = $('#condicion').val();
+  var sltActFijo    = $('input[name="activoFijo"]:checked').val();
+
+    addList(ListMateriales,[["Title",txtDescrip],["Cantidad",txtCnatidad],
+                ["Condicion",sltCondicion],["unidadMedida", sltUniMedida],
+                ["activoFijo",sltActFijo]]);
+
+}
+
   
 function addList(lista,datos){  
 contador = 1;
@@ -84,6 +99,8 @@ contador = 1;
         valuepairs: datos,
         completefunc: function(xData, Status) { 
         FapeID = $(xData.responseXML).SPFilterNode("z:row").attr("ows_ID");
+        IdFape.push(FapeID);
+        
         
         
   /*      alert(FapeID);
@@ -99,7 +116,7 @@ contador = 1;
     
 } 
 
-function ModificarCorrelativoMaterial(IdUpdate, GuidLista, datos){
+function ModificarMaterial(IdUpdate, GuidLista, datos){
   
     $().SPServices({ async:false,
                      operation:"UpdateListItems",
@@ -127,7 +144,7 @@ var cm = 1;
         completefunc: function (xData, Status) {
       $(xData.responseXML).SPFilterNode("z:row").each(function() {
       
-        ModificarCorrelativoMaterial($(this).attr("ows_ID"),ListMateriales,[["correlativoMaterial",cm]]);
+        ModificarMaterial($(this).attr("ows_ID"),ListMateriales,[["correlativoMaterial",cm]]);
         cm =cm +1;
       }); 
                 
@@ -367,11 +384,81 @@ var ini    = "2016-000-00";
   
 }
 
+function Guardar(){
+
+  EstadoBorrador();
+  alert("Los materiales ingresados se han guardado"); 
+
+}
+
+function Enviar(){
+
+  EstadoEnviado();
+  alert("Los materiales ingresados se han enviado a contraloria para su aprobación");
+  location.reload();  
+}
 
 
+function EstadoBorrador(){
+
+var estado = "B";
+  $().SPServices({
+    operation: "GetListItems",
+    async: false,
+    listName: ListMateriales,
+        completefunc: function (xData, Status) {
+      $(xData.responseXML).SPFilterNode("z:row").each(function() {
+      
+        ModificarMaterial($(this).attr("ows_ID"),ListMateriales,[["Estado",estado]]);
+        
+      }); 
+                
+    }
+  }); 
+    
+}
+
+function EstadoEnviado(){
+
+var estado = "E";
+  $().SPServices({
+    operation: "GetListItems",
+    async: false,
+    listName: ListMateriales,
+        completefunc: function (xData, Status) {
+      $(xData.responseXML).SPFilterNode("z:row").each(function() {
+      
+        ModificarMaterial($(this).attr("ows_ID"),ListMateriales,[["Estado",estado]]);
+        
+      }); 
+                
+    }
+  });
+
+}
 
 
 function ModList(id){}
+
+function AsignaFolio(){
+
+  var folio = "";
+  $().SPServices({
+    operation: "GetListItems",
+    async: false,
+    listName: ListFormAPE,
+        completefunc: function (xData, Status) {
+      $(xData.responseXML).SPFilterNode("z:row").each(function() {
+      
+        ModificarMaterial($(this).attr("ows_ID"),ListFormAPE,[["Title",folio]]);
+        
+      }); 
+                
+    }
+  }); 
+
+
+}
 
 function ConvertDateToISO(dtDate){
 //*************************************************
@@ -416,25 +503,6 @@ function ConvertDateToISO(dtDate){
   return s;
 }
 
-function Guardar(){
-  var dptOrga   = $('#nomDepOri').val();
-  var CentBene  = $("#centBene").val();
-
-  if(dptOrga == '0'){
-    alert("Seleccione un Departamento originador");
-  }else{
-     if(CentBene == '0'){
-    alert("Seleccione un centro de beneficio");
-    }else{
-    
-    registrarEncabezado();
-    $('#nomDepOri').val('0');
-    $('#centBene').val('0');
-   
-    }
-    
-  }
-}
 
 
 
